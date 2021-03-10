@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using FF.Data.Repository;
 using FF.Data.Models;
+using RESTCountries.Services;
+using RESTCountries.Models;
 
 namespace AssignmentFF.Controllers
 {/// <summary>
@@ -37,8 +39,35 @@ namespace AssignmentFF.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Add([FromBody] Applicant applicant)
         {
-            await _repository.AddApplicant(applicant);
-            return CreatedAtAction(nameof(GetById), new { id = applicant.ApplicantId }, applicant);
+            Boolean t=false;
+            List<Country> c = await RESTCountriesAPI.GetAllCountriesAsync();
+            for (int i = 0; i<c.Count ; i++)
+            {
+                if (c[i].Name.ToUpper() == applicant.CountryOfOrigin.ToUpper())
+                {
+
+                    t = true;
+                  
+                    break;
+
+                }
+
+            }
+            if (t == true)
+            {
+                await _repository.AddApplicant(applicant);
+                return CreatedAtAction(nameof(GetById), new { id = applicant.ApplicantId }, applicant);
+                
+            }
+            else
+            {
+                return BadRequest("Please Enter correct Country");
+            }
+            
+
+
+
+
         }
         /// <summary>
         /// this get method is used to view the all the applicants along with its details which has been posted

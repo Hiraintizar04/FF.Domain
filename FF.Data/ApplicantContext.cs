@@ -10,6 +10,10 @@ namespace FF.Data
         {
 
         }
-        public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<Applicant> Applicants 
+        { 
+            get;
+            set; 
+        }
     }
 }

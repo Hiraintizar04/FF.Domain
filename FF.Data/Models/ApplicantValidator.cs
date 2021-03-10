@@ -12,12 +12,12 @@ namespace FF.Data.Models
 		public ApplicantValidator()
 		{
 			RuleFor(x => x.ApplicantId).NotNull();
-			RuleFor(x => x.Name).MinimumLength(5);
-			RuleFor(x => x.FamilyName).MinimumLength(5);
-			RuleFor(x => x.Address).MinimumLength(10);
-			RuleFor(x => x.CountryOfOrigin).NotNull();
-			RuleFor(x => x.EmailAddress).EmailAddress();
-			RuleFor(x => x.Age).InclusiveBetween(20, 60);
+            RuleFor(x => x.Name).MinimumLength(5).WithMessage("please enter correct name");
+			RuleFor(x => x.FamilyName).MinimumLength(5).WithMessage("please enter correct family name"); 
+			RuleFor(x => x.Address).MinimumLength(10).WithMessage("Address is invalid"); 
+			RuleFor(x => x.CountryOfOrigin).NotNull().WithMessage("Country does not exist"); 
+			RuleFor(x => x.EmailAddress).EmailAddress().WithMessage("Email Id is invalid");
+			RuleFor(x => x.Age).InclusiveBetween(20, 60).WithMessage("please enter correct age");
 		}
 
 	}
